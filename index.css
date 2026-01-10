@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Основной цвет (Primary) - Teal */
+  --color-primary-50: #e0f2f1;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6; /* Основной акцент */
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+
+  /* Вторичный (Secondary) - Cyan */
+  --color-secondary-50: #ecfeff;
+  --color-secondary-100: #cffafe;
+  --color-secondary-200: #a5f3fc;
+  --color-secondary-300: #67e8f9;
+  --color-secondary-400: oklch(78.9% 0.154 211.53);
+  --color-secondary-500: oklch(71.5% 0.143 215.221); /* Второй акцент */
+  --color-secondary-600: oklch(60.9% 0.126 221.723);
+  --color-secondary-700: #0e7490;
+
+  /* Успех (Success) - Emerald */
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981; /* Для позитивных действий */
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+
+  /* Предупреждение (Warning) - Amber */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b; /* Для предупреждений */
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+
+  /* Ошибка (Error) - Rose (на случай если понадобится) */
+  --color-error-50: #fff1f2;
+  --color-error-100: #ffe4e6;
+  --color-error-200: #fecdd3;
+  --color-error-300: #fda4af;
+  --color-error-400: #fb7185;
+  --color-error-500: #f43f5e; /* Для ошибок и удаления */
+  --color-error-600: #e11d48;
+  --color-error-700: #be123c;
+
+  /* Нейтральные (Neutral) - Gray (переименовано, чтобы не конфликтовать с gray) */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: oklch(92.8% 0.006 264.531);
+  --color-neutral-300: oklch(87.2% 0.01 258.338);
+  --color-neutral-400: oklch(70.7% 0.022 261.325);
+  --color-neutral-500: oklch(55.1% 0.027 264.364);
+  --color-neutral-600: oklch(44.6% 0.03 256.802);
+  --color-neutral-700: oklch(27.8% 0.033 256.848);
+  --color-neutral-800: oklch(21% 0.034 264.665);
+  --color-neutral-900: oklch(13% 0.028 261.692);
+
+  /* Дополнительные фоновые цвета с прозрачностью */
+  --color-bg-light: rgba(255, 255, 255, 0.8);
+  --color-bg-dark: rgba(15, 23, 42, 0.8);
+  --color-bg-primary-subtle: rgba(20, 184, 166, 0.1);
+  --color-bg-success-subtle: rgba(16, 185, 129, 0.1);
+  --color-bg-warning-subtle: rgba(245, 158, 11, 0.1);
+}
+
+@layer {
+  h1 {
+    @apply text-7xl font-bold;
+  }
+
+  h2 {
+    @apply text-6xl font-bold;
+  }
+
+  h3 {
+    @apply text-5xl font-bold;
+  }
+
+  h4 {
+    @apply text-4xl font-bold;
+  }
+
+  section {
+    @apply pt-24 px-4 max-w-6xl mx-auto;
+  }
+
+  input {
+    @apply w-full outline-none border rounded-lg p-3 border-black/20;
+  }
+}
