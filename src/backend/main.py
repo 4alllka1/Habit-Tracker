@@ -6,12 +6,18 @@ from sqlalchemy.orm.attributes import flag_modified
 from database import engine, get_session
 from models import User, Habit
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 
+import os
 import jwt
 import bcrypt
 import json
 
-SECRET_KEY = "qweasd"  # TODO: Change and move to .env
+
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_DAYS = 30
 
