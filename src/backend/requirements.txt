@@ -20,6 +20,7 @@ pyasn1==0.6.1
 pycparser==2.23
 pydantic==2.12.5
 pydantic_core==2.41.5
+PyJWT==2.10.1
 python-dotenv==1.2.1
 python-jose==3.5.0
 PyYAML==6.0.3
@@ -30,6 +31,7 @@ sqlmodel==0.0.31
 starlette==0.50.0
 typing-inspection==0.4.2
 typing_extensions==4.15.0
+uv==0.9.24
 uvicorn==0.40.0
 watchfiles==1.1.1
 websockets==16.0

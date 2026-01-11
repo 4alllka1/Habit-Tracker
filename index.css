@@ -105,4 +105,8 @@
   input {
     @apply w-full outline-none border rounded-lg p-3 border-black/20;
   }
+
+  button {
+    @apply cursor-pointer;
+  }
 }

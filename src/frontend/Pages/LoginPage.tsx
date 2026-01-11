@@ -2,18 +2,56 @@ import { Eye, EyeOff } from "lucide-react";
 import Faint from "../components/Faint";
 import { useState } from "react";
 
+import { API_URL } from "../api";
+import { useNavigate } from "react-router-dom";
+
 function validateData() {}
 
 function LoginPage() {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(
-      `userName: ${userName}\npassword: ${password}\nshowPassword: ${showPassword}`
-    );
+    e.stopPropagation();
+
+    setError(null);
+    setIsLoading(true);
+
+    const payload = {
+      username: username.trim(),
+      password: password.trim(),
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Ошибка входа");
+      }
+
+      localStorage.setItem("token", data.token);
+
+      navigate("/habits");
+    } catch (err: any) {
+      setError(err.message || "Что-то пошло не так");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -30,7 +68,7 @@ function LoginPage() {
             </p>
             <input
               onChange={(e) => {
-                setUserName(e.target.value);
+                setUsername(e.target.value);
               }}
               placeholder="Введите ваше имя пользователя"
             />
@@ -62,7 +100,7 @@ function LoginPage() {
             >
               <div className="w-full h-full px-4 py-3 bg-red-200 rounded-[calc(var(--radius-2xl)-2px)] bg-white">
                 <div className="w-full text-lg bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
-                  Войти в аккаунт
+                  {isLoading ? "Вход..." : "Войти в аккаунт"}
                 </div>
               </div>
             </button>

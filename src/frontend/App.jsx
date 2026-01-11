@@ -1,6 +1,6 @@
 import NavBar from "./components/NavBar";
 import General from "./Pages/General";
-import Login from "./Pages/Login";
+import LoginPage from "./Pages/LoginPage";
 import Habits from "./Pages/Habits";
 import Health from "./Pages/Health";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,7 +14,7 @@ function App() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<General />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/habits" element={<Habits />} />
             <Route path="/health" element={<Health />} />
           </Routes>
