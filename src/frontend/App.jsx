@@ -4,6 +4,7 @@ import LoginPage from "./Pages/LoginPage";
 import Habits from "./Pages/Habits";
 import Health from "./Pages/Health";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Profile from "./Pages/Profile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/habits" element={<Habits />} />
             <Route path="/health" element={<Health />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
       </div>

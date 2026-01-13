@@ -1,5 +1,5 @@
 import { ChartColumnStacked, Heart, Home, LogIn, User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { API_URL } from "../api";
 
@@ -16,8 +16,9 @@ function NavBar() {
       setIsLoggedIn(true);
     }
   }
-
-  checkIsLoggedIn();
+  useEffect(() => {
+    checkIsLoggedIn();
+  }, [localStorage.getItem("token")]);
 
   const baseLinkStyle =
     "px-4 py-3 rounded-xl flex gap-2 items-center justify-center transition duration-500";
