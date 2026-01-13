@@ -144,7 +144,7 @@ def register(
     session.commit()
     session.refresh(user)
 
-    return {"username": user.username}
+    return {"username": user.username, "id": user.id}
 
 
 @app.get("/api/users", response_model=list[User])
@@ -156,45 +156,36 @@ def get_all_users(session: Session = Depends(get_session)):
 
 @app.post("/api/users/habits")
 def create_habit(
-    habit: dict = Body(...),
+    habit: Habit = Body(...),
     current_user: User = Depends(get_current_user),
     session: Session = Depends(get_session),
 ):
-    current_user.habits.append(habit)
-
-    try:
-        flag_modified(current_user, "habits")
-        session.commit()
-        session.refresh(current_user)
-
-        print(current_user)
-    except Exception as e:
-        session.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
-
-    return {
-        "id": current_user.id,
-        "username": current_user.username,
-        "habits": current_user.habits,
-    }
-
-
-@app.delete("/api/users/habits")
-def delete_habit(
-    habit: dict = Body(...),
-    current_user: User = Depends(get_current_user),
-    session: Session = Depends(get_session),
-):
-    current_user.habits.remove(habit)
-    flag_modified(current_user, "habits")
+    habit.user_id = current_user.id
+    print(habit)
+    session.add(habit)
+    flag_modified(habit, "user_id")
     session.commit()
-    session.refresh(current_user)
+    session.refresh(habit)
+    return habit
 
-    return {
-        "id": current_user.id,
-        "username": current_user.username,
-        "habits": current_user.habits,
-    }
+
+@app.delete("/api/users/habits/{habit_id}")
+def delete_habit(
+    habit_id: int,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    print(habit_id)
+    habit = session.get(Habit, habit_id)
+    if not habit:
+        raise HTTPException(status_code=404, detail="Habit not found")
+    if habit.user_id != current_user.id:
+        raise HTTPException(status_code=404, detail="Habit is not owned by user")
+
+    session.delete(habit)
+    session.commit()
+
+    return {"message": "Habit deleted successfully"}
 
 
 if __name__ == "__main__":

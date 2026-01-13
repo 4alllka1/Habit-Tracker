@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../api";
 
 interface Habit {
+  id?: number;
   name: string;
   description?: string;
   frequency?: string;
@@ -74,6 +75,7 @@ function Habits() {
         return;
       }
 
+      console.log(newHabit);
       const response = await fetch(`${API_URL}/api/users/habits`, {
         method: "POST",
         headers: {
@@ -91,7 +93,8 @@ function Habits() {
         throw new Error(errData.detail || "Ошибка создания");
       }
 
-      setHabits((prevHabits) => [...prevHabits, habitToAdd]);
+      const data = await response.json();
+      setHabits((prevHabits) => [...prevHabits, data]);
       setNewHabit(defaultHabit);
 
       setIsModalOpen(false);
@@ -106,14 +109,18 @@ function Habits() {
 
   const handleDeleteHabit = async (habitToDelete: Habit) => {
     try {
-      const response = await fetch(`${API_URL}/api/users/habits`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(habitToDelete),
-      });
+      console.log(habitToDelete);
+      const response = await fetch(
+        `${API_URL}/api/users/habits/${habitToDelete.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(habitToDelete),
+        }
+      );
 
       if (!response.ok) {
         const errData = await response.json();

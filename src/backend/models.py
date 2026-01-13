@@ -1,6 +1,6 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 from sqlalchemy import Column, JSON
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 
@@ -11,11 +11,15 @@ class UserBase(SQLModel):
 class User(UserBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     hashed_password: str
-    habits: list[dict] = Field(default_factory=list, sa_column=Column(JSON))
+    habits: List["Habit"] = Relationship(back_populates="user")
 
 
-class Habit(SQLModel):
+class Habit(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     description: Optional[str] = None
-    frequency: str = "daily"  # Daily, weekly, etc
+    frequency: str = "daily"
     category: Optional[str] = None
+
+    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
+    user: User = Relationship(back_populates="habits")
