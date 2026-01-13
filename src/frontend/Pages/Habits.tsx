@@ -262,11 +262,11 @@ function Habits() {
           {habits.map((item, index) => (
             <div key={index} className="p-6 border rounded-xl">
               <div className="flex justify-between items-center">
-                <h4>{item.name}</h4>
+                <h4 className="inline-block min-w-0 truncate">{item.name}</h4>
                 <Trash
                   onClick={() => handleDeleteHabit(item)}
                   size={30}
-                  className="text-red-500"
+                  className="text-red-500 z-10 cursor-pointer flex-shrink-0"
                 />
               </div>
               <div className="text-neutral-600">{item.description}</div>
