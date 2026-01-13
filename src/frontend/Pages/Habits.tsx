@@ -68,6 +68,12 @@ function Habits() {
   const handleCreateHabit = async (habitToAdd: Habit) => {
     setIsLoading(true);
     try {
+      if (newHabit.name.trim() == "") {
+        setError("Введите имя для привычки!");
+        setIsLoading(false);
+        return;
+      }
+
       const response = await fetch(`${API_URL}/api/users/habits`, {
         method: "POST",
         headers: {
@@ -89,6 +95,7 @@ function Habits() {
       setNewHabit(defaultHabit);
 
       setIsModalOpen(false);
+      setError(null);
     } catch (err: any) {
       // setError
       console.log("Error: ", err.message);
@@ -166,13 +173,16 @@ function Habits() {
               <h4 className="mb-6">Новая привычка</h4>
 
               <div className="mb-4">
-                <label className="font-semibold">Название</label>
+                <label className="font-semibold">
+                  Название<span className="text-neutral-500 ml-0.5">*</span>
+                </label>
                 <input
                   type="text"
                   value={newHabit.name}
-                  onChange={(e) =>
-                    setNewHabit({ ...newHabit, name: e.target.value })
-                  }
+                  onChange={(e) => {
+                    setNewHabit({ ...newHabit, name: e.target.value });
+                    setError(null);
+                  }}
                   className="mt-1"
                 />
               </div>
@@ -204,6 +214,7 @@ function Habits() {
                 </select>
               </div>
 
+              {/* TODO: Сделать select с созданием новой категории */}
               <div className="mb-6">
                 <span className="font-semibold">Категория</span>
                 <input
@@ -212,6 +223,10 @@ function Habits() {
                   }
                 />
               </div>
+
+              {error?.trim() && (
+                <div className="text-error-500 mb-5">{error}</div>
+              )}
 
               <div className="flex justify-end gap-3">
                 <button
