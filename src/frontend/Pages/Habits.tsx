@@ -160,7 +160,7 @@ function Habits() {
           className="fixed bottom-6 right-6 p-3 border border-primary-400 text-primary-400 font-semibold lg:text-lg rounded-full md:rounded-lg"
           onClick={() => setIsModalOpen(true)}
         >
-          <span className="flex justify-center items-center gap-2 pl-1">
+          <span className="flex justify-center items-center gap-2 md:pl-1">
             <p className="hidden md:block">Добавить привычку</p>
             <Plus />
           </span>
