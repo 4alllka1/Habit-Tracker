@@ -59,6 +59,10 @@ def get_current_user(
         username: str = payload.get("sub")
         if username is None:
             raise HTTPException(status_code=401, detail="Invalid token")
+
+        if payload.get("exp") < datetime.now().timestamp():
+            raise HTTPException(status_code=401, detail="Token expired")
+
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
