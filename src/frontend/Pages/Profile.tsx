@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../Store/authStore";
 
 function Profile() {
   const navigate = useNavigate();
 
   const Logout = () => {
     if (window.confirm("Вы действительно хотите выйти?")) {
-      localStorage.removeItem("token");
+      useAuthStore.getState().logout();
       navigate("/login");
     }
   };

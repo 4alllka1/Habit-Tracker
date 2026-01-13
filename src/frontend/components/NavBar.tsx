@@ -2,9 +2,12 @@ import { ChartColumnStacked, Heart, Home, LogIn, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { API_URL } from "../api";
+import { useAuthStore } from "../Store/authStore";
 
 function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { token, logout } = useAuthStore();
+
   async function checkIsLoggedIn() {
     const response = await fetch(`${API_URL}/api/users/me`, {
       headers: {
@@ -60,7 +63,7 @@ function NavBar() {
         </NavLink>
       </div>
 
-      {!isLoggedIn && (
+      {!token && (
         <div className="container flex items-center justify-center">
           <NavLink
             to="/login"
@@ -75,7 +78,7 @@ function NavBar() {
         </div>
       )}
 
-      {isLoggedIn && (
+      {token && (
         <div className="container flex items-center justify-center">
           <NavLink
             to="/profile"

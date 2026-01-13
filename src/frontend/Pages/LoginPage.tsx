@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { API_URL } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../Store/authStore";
 
 function validateData() {}
 
@@ -44,7 +45,7 @@ function LoginPage() {
         throw new Error(data.detail || "Ошибка входа");
       }
 
-      localStorage.setItem("token", data.token);
+      useAuthStore.getState().login(data.token);
 
       navigate("/habits");
     } catch (err: any) {
