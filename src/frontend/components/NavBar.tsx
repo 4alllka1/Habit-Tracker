@@ -5,23 +5,7 @@ import { API_URL } from "../api";
 import { useAuthStore } from "../Store/authStore";
 
 function NavBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { token, logout } = useAuthStore();
-
-  async function checkIsLoggedIn() {
-    const response = await fetch(`${API_URL}/api/users/me`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (response.ok) {
-      setIsLoggedIn(true);
-    }
-  }
-  useEffect(() => {
-    checkIsLoggedIn();
-  }, [localStorage.getItem("token")]);
 
   const baseLinkStyle =
     "px-4 py-3 rounded-xl flex gap-2 items-center justify-center transition duration-500";
